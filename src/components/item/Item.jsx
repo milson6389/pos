@@ -10,7 +10,7 @@ const Item = ({ detail }) => {
     }
   };
   return (
-    <tr className="border hover:bg-slate-400">
+    <tr className="border hover:bg-slate-200">
       <td>{detail.id}</td>
       <td>{detail.name}</td>
       <td>
