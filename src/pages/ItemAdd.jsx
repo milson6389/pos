@@ -1,10 +1,15 @@
 import { useState } from "react";
 import Card from "../components/layout/Card";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addItem } from "../store/posSlice";
 
 const ItemAdd = () => {
   const [itemName, setItemName] = useState("");
   const [itemImg, setItemImg] = useState("");
   const [price, setPrice] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const setItemNameHandler = (e) => {
     e.preventDefault();
@@ -23,11 +28,15 @@ const ItemAdd = () => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
+    if (confirm("Add New Item ?")) {
+      dispatch(addItem({ name: itemName, image: itemImg, price: price }));
+      navigate("/");
+    }
   };
 
   return (
     <Card>
-      <h1 className="text-2xl font-bold text-center mb-3">Edit Item</h1>
+      <h1 className="text-2xl font-bold text-center mb-3">Add Item</h1>
       <form onSubmit={formSubmitHandler}>
         <div className="flex flex-col mb-3 w-full">
           <label htmlFor="item">Item Name</label>

@@ -1,22 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
-  items: [
-    {
-      id: 1,
-      name: "Macbook Air M3 Pro",
-      image:
-        "https://cdnpro.eraspace.com/media/catalog/product/a/p/apple_macbook_air_13_inci_m3_2024_midnight_1.jpg",
-      price: 10,
-    },
-    {
-      id: 2,
-      name: "IPhone 15 Pro",
-      image:
-        "https://cworld.id/wp-content/uploads/2023/10/ID_iPhone_15_Pro_Black_Titanium_PDP_Image_Position-1A_Black_Titanium_Color-scaled.jpg",
-      price: 8,
-    },
-  ],
+  items: [],
 };
 
 export const posSlice = createSlice({
@@ -24,8 +9,14 @@ export const posSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
+      let id = 1;
+      let arrSize = current(state.items).length;
+      if (arrSize > 0) {
+        id = Number(current(state.items)[arrSize - 1].id) + 1;
+      }
+
       const item = {
-        id: +new Date(),
+        id: id,
         name: action.payload.name,
         image: action.payload.image,
         price: action.payload.price,
@@ -33,15 +24,24 @@ export const posSlice = createSlice({
       state.items.push(item);
     },
     updateItem: (state, action) => {
-      const index = state.items.findIndex(
-        (item) => item.id === action.payload.id
+      let existing = current(state.items).find(
+        (item) => Number(item.id) === Number(action.payload.id)
       );
-      state.items[index].name = action.payload.name;
-      state.items[index].image = action.payload.image;
-      state.items[index].price = action.payload.price;
+      state.items = current(state.items).filter(
+        (x) => x.id !== Number(action.payload.id)
+      );
+      existing = {
+        ...existing,
+        name: action.payload.name,
+        image: action.payload.image,
+        price: action.payload.price,
+      };
+      state.items.push(existing);
     },
     deleteItem: (state, action) => {
-      return state.items.filter((item) => item.id !== action.payload.id);
+      state.items = current(state.items).filter(
+        (x) => x.id !== Number(action.payload.id)
+      );
     },
   },
 });

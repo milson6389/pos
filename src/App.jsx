@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Root from "./components/layout/Root";
 import Home from "./pages/Home";
 import ItemAdd from "./pages/ItemAdd";
@@ -24,13 +23,6 @@ const App = () => {
         {
           path: "/item/:id",
           element: <ItemEdit />,
-          loader: async ({ params }) => {
-            const id = params.id;
-            const items = useSelector((state) => state.pos.items).filter(
-              (item) => item.id == id
-            );
-            return items[0];
-          },
         },
         {
           path: "/cashier",

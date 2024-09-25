@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
 import Card from "../components/layout/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateItem } from "../store/posSlice";
 
 const ItemEdit = () => {
-  const data = useLoaderData();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const data = useSelector((state) => state.pos.items).filter(
+    (item) => item.id == id
+  )[0];
+
   const [itemName, setItemName] = useState(data?.name);
   const [itemImg, setItemImg] = useState(data?.image);
   const [price, setPrice] = useState(data?.price);
@@ -25,6 +33,12 @@ const ItemEdit = () => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
+    if (confirm("Save Changes ?")) {
+      dispatch(
+        updateItem({ id, name: itemName, image: itemImg, price: price })
+      );
+      navigate("/");
+    }
   };
 
   return (

@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteItem } from "../../store/posSlice";
 
 const Item = ({ detail }) => {
+  const dispatch = useDispatch();
+  const deleteItemHandler = () => {
+    if (confirm("Remove Item ?")) {
+      dispatch(deleteItem({ id: detail.id }));
+    }
+  };
   return (
     <tr className="border hover:bg-slate-400">
       <td>{detail.id}</td>
@@ -13,7 +21,7 @@ const Item = ({ detail }) => {
         <Link to={`/item/${detail.id}`}>
           <i className="fa-solid fa-pen-to-square text-sky-500"></i>
         </Link>
-        <button className="mx-2">
+        <button onClick={deleteItemHandler} className="mx-2">
           <i className="fa-solid fa-trash text-red-500"></i>
         </button>
       </td>

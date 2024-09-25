@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import Item from "./Item";
 
-const ItemList = ({ search = "" }) => {
+const ItemList = () => {
   const items = useSelector((state) => state.pos.items);
 
   return (

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import Card from "../components/layout/Card";
 import ItemList from "../components/item/ItemList";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const itemCount = useSelector((state) => state.pos.items).length;
   return (
     <Card>
       <Link
@@ -11,7 +13,7 @@ const Home = () => {
       >
         Add New Item
       </Link>
-      <ItemList />
+      {itemCount > 0 && <ItemList />}
     </Card>
   );
 };
