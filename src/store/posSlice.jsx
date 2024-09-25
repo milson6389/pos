@@ -1,7 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
-  items: [],
+  items: JSON.parse(localStorage.getItem("items")) || [],
 };
 
 export const posSlice = createSlice({
@@ -22,6 +22,7 @@ export const posSlice = createSlice({
         price: action.payload.price,
       };
       state.items.push(item);
+      localStorage.setItem("items", JSON.stringify(current(state.items)));
     },
     updateItem: (state, action) => {
       let existing = current(state.items).find(
@@ -37,11 +38,13 @@ export const posSlice = createSlice({
         price: action.payload.price,
       };
       state.items.push(existing);
+      localStorage.setItem("items", JSON.stringify(state.items));
     },
     deleteItem: (state, action) => {
       state.items = current(state.items).filter(
         (x) => x.id !== Number(action.payload.id)
       );
+      localStorage.setItem("items", JSON.stringify(state.items));
     },
   },
 });
