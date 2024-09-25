@@ -38,6 +38,7 @@ export const posSlice = createSlice({
         price: action.payload.price,
       };
       state.items.push(existing);
+      state.items = state.items.sort((a, b) => a.id - b.id);
       localStorage.setItem("items", JSON.stringify(state.items));
     },
     deleteItem: (state, action) => {
@@ -49,5 +50,5 @@ export const posSlice = createSlice({
   },
 });
 
-export const { addItem, searchItem, updateItem, deleteItem } = posSlice.actions;
+export const { addItem, updateItem, deleteItem } = posSlice.actions;
 export default posSlice.reducer;

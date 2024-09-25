@@ -7,7 +7,7 @@ import { addItem } from "../store/posSlice";
 const ItemAdd = () => {
   const [itemName, setItemName] = useState("");
   const [itemImg, setItemImg] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
